@@ -14,25 +14,12 @@ int minimumAbsoluteDifference(vector<int> arr)
 {
     size_t n =arr.size();
     sort(arr.begin(), arr.end());
-    int res = INT_MAX, local_min = arr[0], local_max = arr[0];
+    int res = INT_MAX;
+    int diff;
     
-    
-    for(int i = 1;i<n;i++)
+    for(int i = 0;i<n-1;i++)
     {
-        int diff = INT_MAX;;
-        if(arr[i] < local_min)
-        {
-            diff = abs(local_min - arr[i]);
-            local_min = arr[i];
-        }
-        else if(arr[i] > local_max)
-        {
-            diff = abs(arr[i] - local_max);
-            local_max = arr[i];
-        }
-        else
-            diff = 0;
-        
+        diff = min(abs(arr[i] - arr[i+1]), abs(arr[i+1] - arr[i]));
         if(diff < res)
             res = diff;
     }
