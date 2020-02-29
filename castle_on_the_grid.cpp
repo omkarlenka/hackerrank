@@ -36,7 +36,7 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
     queue<tuple<int, int>> q;
     q.push(make_tuple(sx,sy));
     
-    printGrid(G);
+    //    printGrid(G);
     
     while(true)
     {
@@ -44,13 +44,21 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
         q.pop();
         int x = get<0>(t), y = get<1>(t);
         
-        //if(G[x][y] != '.' && G[x][y] != 'X')  //already filles, skip it
-            //continue;
-
         
         if((x-1) >= 0 && G[x-1][y] =='.')
-            q.push(make_tuple(x-1,y));
-        else if((x-1) >= 0 && G[x-1][y] !='X')
+        {
+            for(int i = x-1;i>=0;i--)
+            {
+                if(G[i][y] !='X')
+                {
+                    G[i][y] = G[x][y]+1;
+                    q.push(make_tuple(i,y));
+                }
+                else
+                    break;
+            }
+        }
+        else if(G[x][y] == '.' && (x-1) >= 0 && G[x-1][y] !='X')
         {
             if((x-1 == 0))
                 G[x][y]  = G[x-1][y] + 1;
@@ -68,11 +76,23 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
                 G[x][y] = G[x-1][y];
         }
         
-//        printGrid(G);
+        //        printGrid(G);
         
         if((y-1) >= 0 && G[x][y-1] =='.')
-            q.push(make_tuple(x,y-1));
-        else if((y-1) >= 0 && G[x][y-1] !='X')
+        {
+            for(int j = y-1;j>=0;j--)
+            {
+                if(G[x][j] !='X')
+                {
+                    G[x][j] = G[x][y]+1;
+                    q.push(make_tuple(x,j));
+                }
+                else
+                    break;
+            }
+        }
+        
+        else if(G[x][y] == '.' && (y-1) >= 0 && G[x][y-1] !='X')
         {
             if((y-1 == 0))
                 G[x][y]  = G[x][y-1] + 1;
@@ -90,11 +110,23 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
                 G[x][y] = G[x][y-1];
         }
         
-//        printGrid(G);
+        //        printGrid(G);
         
         if((x+1) < n && G[x+1][y] =='.')
-            q.push(make_tuple(x+1,y));
-        else if((x+1) < n && G[x+1][y] !='X')
+        {
+            for(int i = x+1;i<n;i++)
+            {
+                if(G[i][y] !='X')
+                {
+                    G[i][y] = G[x][y]+1;
+                    q.push(make_tuple(i,y));
+                }
+                else
+                    break;
+            }
+            
+        }
+        else if(G[x][y] == '.' && (x+1) < n && G[x+1][y] !='X')
         {
             if((x+1 == n-1))
                 G[x][y]  = G[x+1][y] + 1;
@@ -112,14 +144,26 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
                 G[x][y] = G[x+1][y];
         }
         
-//        printGrid(G);
+        //        printGrid(G);
         
         if((y+1) < n && G[x][y+1] =='.')
-            q.push(make_tuple(x,y+1));
-        else if((y+1) < n && G[x][y+1] !='X')
+        {
+            for(int j = y+1;j<n;j++)
+            {
+                if(G[x][j] !='X')
+                {
+                    G[x][j] = G[x][y]+1;
+                    q.push(make_tuple(x,j));
+                }
+                else
+                    break;
+            }
+            
+        }
+        else if(G[x][y] == '.' && (y+1) < n && G[x][y+1] !='X')
         {
             if((y+1 == n-1))
-                G[x][y]  = G[x+1][y] + 1;
+                G[x][y]  = G[x][y+1] + 1;
             else if(y+2 < n && (G[x][y+2] == 'X' || G[x][y+2] == '.'))
             {
                 G[x][y] = G[x][y+1] + 1;
@@ -133,6 +177,8 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
             else
                 G[x][y] = G[x][y+1];
         }
+        
+        //        printGrid(G);
         
         if(x == ex && y == ey)
         {
@@ -155,11 +201,11 @@ int main()
     
     string line;
     /*
-    while (getline(infile, line))
-    {
-        istringstream iss(line);
-        if (!(iss >> G[i++])) { break; }
-    }
+     while (getline(infile, line))
+     {
+     istringstream iss(line);
+     if (!(iss >> G[i++])) { break; }
+     }
      */
     if (infile.is_open())
     {
@@ -168,7 +214,7 @@ int main()
             G[i++] = line;
         }
     }
-
+    
     int sx,sy,ex,ey;
     
     cin >> sx >> sy >> ex >> ey;
