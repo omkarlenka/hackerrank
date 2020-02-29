@@ -45,14 +45,17 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
         int x = get<0>(t), y = get<1>(t);
         
         
-        if((x-1) >= 0 && G[x-1][y] =='.')
+        if((x-1) >= 0 && G[x-1][y] !='X')
         {
             for(int i = x-1;i>=0;i--)
             {
                 if(G[i][y] !='X')
                 {
-                    G[i][y] = G[x][y]+1;
-                    q.push(make_tuple(i,y));
+                    if(G[i][y] == '.')
+                    {
+                        G[i][y] = G[x][y]+1;
+                        q.push(make_tuple(i,y));
+                    }
                 }
                 else
                     break;
@@ -78,14 +81,17 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
         
         //        printGrid(G);
         
-        if((y-1) >= 0 && G[x][y-1] =='.')
+        if((y-1) >= 0 && G[x][y-1] !='X')
         {
             for(int j = y-1;j>=0;j--)
             {
                 if(G[x][j] !='X')
                 {
-                    G[x][j] = G[x][y]+1;
-                    q.push(make_tuple(x,j));
+                    if(G[x][j] == '.')
+                    {
+                        G[x][j] = G[x][y]+1;
+                        q.push(make_tuple(x,j));
+                    }
                 }
                 else
                     break;
@@ -112,14 +118,17 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
         
         //        printGrid(G);
         
-        if((x+1) < n && G[x+1][y] =='.')
+        if((x+1) < n && G[x+1][y] !='X')
         {
             for(int i = x+1;i<n;i++)
             {
                 if(G[i][y] !='X')
                 {
-                    G[i][y] = G[x][y]+1;
-                    q.push(make_tuple(i,y));
+                    if(G[i][y] == '.')
+                    {
+                        G[i][y] = G[x][y]+1;
+                        q.push(make_tuple(i,y));
+                    }
                 }
                 else
                     break;
@@ -146,14 +155,17 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
         
         //        printGrid(G);
         
-        if((y+1) < n && G[x][y+1] =='.')
+        if((y+1) < n && G[x][y+1] !='X')
         {
             for(int j = y+1;j<n;j++)
             {
                 if(G[x][j] !='X')
                 {
-                    G[x][j] = G[x][y]+1;
-                    q.push(make_tuple(x,j));
+                    if(G[x][j] == '.')
+                    {
+                        G[x][j] = G[x][y]+1;
+                        q.push(make_tuple(x,j));
+                    }
                 }
                 else
                     break;
@@ -182,7 +194,7 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
         
         if(x == ex && y == ey)
         {
-            printGrid(G);
+            //printGrid(G);
             return G[x][y]-'0';
         }
         
@@ -193,20 +205,14 @@ int minimumMoves(vector<string> G, int sx, int sy, int ex, int ey)
 
 int main()
 {
-    ifstream infile("/Users/omlenka/Documents/hackerrank/castle_on_the_grid/castle_on_the_grid/input.txt");
+    ifstream infile("input.txt");
     int n;
     cin >> n;
     vector<string> G(n);
     int i = 0;
     
     string line;
-    /*
-     while (getline(infile, line))
-     {
-     istringstream iss(line);
-     if (!(iss >> G[i++])) { break; }
-     }
-     */
+    
     if (infile.is_open())
     {
         while(infile >> line)
