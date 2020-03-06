@@ -65,13 +65,14 @@ vector<ll> riddle(vector<ll> arr)
     map<ll, ll>::iterator itr;
     for(itr = M.begin();itr!=M.end();itr++)
     {
-        if(M_reverse.find(itr->second) == M.end())
+        if(M_reverse.find(itr->second) == M_reverse.end())
         {
             M_reverse[itr->second] = itr->first;
         }
         else
         {
-            M_reverse[itr->second] = max(M_reverse[itr->second], itr->first);
+            if(arr[M_reverse[itr->second]] < arr[itr->first])
+                M_reverse[itr->second] = itr->first;
         }
     }
     
@@ -97,6 +98,16 @@ vector<ll> riddle(vector<ll> arr)
             continue;
         }
         itr++;
+    }
+    
+    //Clean up res
+    ll max_elem = res[arr.size()-1];
+    for(ll i = res.size()-2;i>=0;i--)
+    {
+        if(res[i] < max_elem)
+            res[i] = max_elem;
+        else
+            max_elem = res[i];
     }
     
     return res;
