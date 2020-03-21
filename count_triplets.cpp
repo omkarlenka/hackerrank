@@ -12,8 +12,6 @@
 
 using namespace std;
 
-#define ll long long
-
 long countTriplets_util(vector<long> v)
 {
     map<long, long> m;
@@ -41,7 +39,7 @@ long countTriplets(vector<long> v, long r)
     {
         long count;
         long middle;
-        if(m.find(v[i]/r) != m.end() && m.find(v[i]/(r*r)) != m.end())
+        if(v[i]%r == 0 && v[i]%(r*r) == 0 && m.find(v[i]/r) != m.end() && m.find(v[i]/(r*r)) != m.end())
         {
             if(m.find(v[i]) != m.end())
             {
@@ -56,7 +54,7 @@ long countTriplets(vector<long> v, long r)
             m[v[i]] = make_pair(count, middle);
             res += m[v[i]/r].second;
         }
-        else if(m.find(v[i]/r) != m.end())
+        else if(v[i]%r == 0 && m.find(v[i]/r) != m.end())
         {
             if(m.find(v[i]) != m.end())
             {
