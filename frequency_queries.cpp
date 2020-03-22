@@ -15,44 +15,74 @@ vector<string> split(const string &);
 
 // Complete the freqQuery function below.
 vector<int> freqQuery(vector<vector<int>> queries) {
-    map<int, int> m1;
-    map<int, int> m2;
+    map<int, int> m1;  //<data, frequency>
+    map<int, int> m2;  //<frequency, count>
     vector<int> res;
-    fo(int i = 0;i<queries.size();i++)
+    for(int i = 0;i<queries.size();i++)
     {
         int operation = queries[i][0];
         int data = queries[i][1];
         
-        switch(q)
+        switch(operation)
         {
             case 1:
+                if(m1.find(data) != m1.end() && m2.find(m1[data]) != m2.end())
+                {
+                    m2[m1[data]]--;
+                    if(m2[m1[data]] == 0)
+                        m2.erase(m1[data]);
+                }
+                
                 if(m1.find(data) == m1.end())
                 {
                     m1[data] = 1;
                 }
                 else
                     m1[data]++;
-                m2[m1[data]] = data;
+                if(m2.find(m1[data]) != m2.end())
+                {
+                    m2[m1[data]]++;
+                }
+                else
+                    m2[m1[data]] = 1;
                 break;
                 
             case 2:
+                if(m1.find(data) != m1.end() && m2.find(m1[data]) != m2.end())
+                {
+                    m2[m1[data]]--;
+                    if(m2[m1[data]] == 0)
+                        m2.erase(m1[data]);
+                }
                 if(m1.find(data) != m1.end())
                 {
                     m1[data]--;
                     if(m1[data] == 0)
                         m1.erase(data);
-                    
-                    m2[m1[data]] = data;
+                }
+                if(m1.find(data) != m1.end())
+                {
+                    if(m2.find(m1[data]) != m2.end())
+                    {
+                        m2[m1[data]]++;
+                    }
+                    else
+                        m2[m1[data]] = 1;
                 }
                 
                 break;
                 
             case 3:
-                if(m1.find(data)!=m.end())
-                    break;
+                if(m2.find(data) !=  m2.end())
+                    res.push_back(1);
+                else
+                    res.push_back(0);
+                break;
         }
         
     }
+    
+    return res;
     
 }
 
